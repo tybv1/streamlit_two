@@ -41,7 +41,7 @@ def fetch_and_display_news(category, num_articles):
         )
         if topic != "Choose Topic":
             site = (
-                f"https://news.google.com/news/rss/headlines/section/TOPIC/{topic}"
+                f"https://news.google.com/news/rss/headlines/section/topic/{topic}"
             )
         else:
             return
