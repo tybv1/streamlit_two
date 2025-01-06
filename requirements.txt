@@ -1,0 +1,5 @@
+beautifulsoup4==4.12.2
+newspaper3k==0.2.8
+nltk==3.9.1
+streamlit==1.41.0
+lxml_html_clean==0.4.1
