@@ -70,7 +70,7 @@ def fetch_and_display_news(category, num_articles):
             news_data.parse()
             news_data.nlp()
             st.write(f"**Summary:** {news_data.summary}")
-            st.write(f"**Image:** {news_data.top_image}")
+            st.image(news_data.top_image)
             st.write(f"**Published Date:** {news.pubDate.text}")
             st.write("---")
 
