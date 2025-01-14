@@ -21,31 +21,46 @@ def analyze_sentiment(article_text):
         article_text (str): The text content of the article.
 
     Returns:
-        str: The sentiment label (e.g., "Positive", "Negative", "Neutral").
+        tuple: The sentiment label (e.g., "Positive", "Negative", "Neutral")
+               and the sentiment score as a float.
     """
     analysis = TextBlob(article_text)
     if analysis.sentiment.polarity > 0:
-        return "Positive"
+        return "Positive", analysis.sentiment.polarity
     elif analysis.sentiment.polarity < 0:
-        return "Negative"
+        return "Negative", analysis.sentiment.polarity
     else:
-        return "Neutral"
+        return "Neutral", analysis.sentiment.polarity
+
+
+def determine_bias(article_text):
+    """
+    Determines the bias of the given article text.
+
+    Args:
+        article_text (str): The text content of the article.
+
+    Returns:
+        str: The bias label (e.g., "Left", "Right", "Center", "Unknown").
+    """
+    # This is a placeholder for the actual bias detection implementation.
+    # Replace this with your preferred bias detection method.
+    # For now, it returns "Unknown" for all articles.
+    return "Unknown"
 
 
 def fetch_and_display_news(query):
     """
-    Fetches news articles from NewsAPI.org based on the query,
-    summarizes them, performs sentiment analysis, and displays the
-    results in Streamlit.
+    Fetches 5 news articles from NewsAPI.org based on the query,
+    summarizes them, performs sentiment analysis, determines bias,
+    and displays the results in Streamlit.
 
     Args:
         query (str): The search query for news articles.
     """
 
-    # Init the News API client
     newsapi = NewsApiClient(api_key=NEWS_API_KEY)
 
-    # Fetch top headlines for the query
     all_articles = newsapi.get_top_headlines(q=query, page_size=5)
 
     if all_articles['status'] == 'ok':
@@ -62,9 +77,11 @@ def fetch_and_display_news(query):
                 news_data.nlp()
 
                 if news_data.summary:
-                    sentiment = analyze_sentiment(news_data.summary)
+                    sentiment, score = analyze_sentiment(news_data.summary)
+                    bias = determine_bias(news_data.summary)
                     st.write(f"**Summary:** {news_data.summary}")
-                    st.write(f"**Sentiment:** {sentiment}")
+                    st.write(f"**Sentiment:** {sentiment} ({score:.2f})")
+                    st.write(f"**Bias:** {bias}")
                 else:
                     st.write("**Summary:** Unable to generate summary for this article.")
 
