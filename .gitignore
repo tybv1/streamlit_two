@@ -169,3 +169,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# test / dev classes excluded
+app2.py
+app3.py
+app4.py
+app6.py
