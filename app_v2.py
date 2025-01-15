@@ -33,35 +33,19 @@ def analyze_sentiment(article_text):
         return "Neutral", analysis.sentiment.polarity
 
 
-def determine_bias(article_text):
+def fetch_and_display_news(topic):
     """
-    Determines the bias of the given article text.
+    Fetches 5 news articles from NewsAPI.org based on the topic,
+    summarizes them, performs sentiment analysis, and displays the
+    results in Streamlit.
 
     Args:
-        article_text (str): The text content of the article.
-
-    Returns:
-        str: The bias label (e.g., "Left", "Right", "Center", "Unknown").
-    """
-    # This is a placeholder for the actual bias detection implementation.
-    # Replace this with your preferred bias detection method.
-    # For now, it returns "Unknown" for all articles.
-    return "Unknown"
-
-
-def fetch_and_display_news(query):
-    """
-    Fetches 5 news articles from NewsAPI.org based on the query,
-    summarizes them, performs sentiment analysis, determines bias,
-    and displays the results in Streamlit.
-
-    Args:
-        query (str): The search query for news articles.
+        topic (str): The topic for news articles.
     """
 
     newsapi = NewsApiClient(api_key=NEWS_API_KEY)
 
-    all_articles = newsapi.get_top_headlines(q=query, page_size=5)
+    all_articles = newsapi.get_top_headlines(q=topic, page_size=5)
 
     if all_articles['status'] == 'ok':
         articles = all_articles['articles']
@@ -78,10 +62,8 @@ def fetch_and_display_news(query):
 
                 if news_data.summary:
                     sentiment, score = analyze_sentiment(news_data.summary)
-                    bias = determine_bias(news_data.summary)
                     st.write(f"**Summary:** {news_data.summary}")
                     st.write(f"**Sentiment:** {sentiment} ({score:.2f})")
-                    st.write(f"**Bias:** {bias}")
                 else:
                     st.write("**Summary:** Unable to generate summary for this article.")
 
@@ -96,6 +78,10 @@ def fetch_and_display_news(query):
 
 if __name__ == "__main__":
     st.title("NewsAPI Summarizer")
-    query = st.text_input("Enter your search query:")
-    if query:
-        fetch_and_display_news(query)
+
+    # Dropdown for topic selection
+    topics = ["Technology", "Business", "Sports", "Entertainment", "Health", "Science"]
+    selected_topic = st.selectbox("Select a topic:", topics)
+
+    # Fetch and display news for the selected topic
+    fetch_and_display_news(selected_topic)

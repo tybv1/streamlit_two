@@ -9,18 +9,6 @@ nltk.download("punkt")
 
 
 def fetch_and_display_news(category, num_articles):
-    """
-    Fetches news articles from Google News based on the selected category
-    and number of articles, summarizes them, and displays the summarized
-    content on a Streamlit UI.
-
-    Args:
-        category (str): The category of news to fetch
-                       (e.g., 'WORLD', 'NATION', 'BUSINESS',
-                       'TECHNOLOGY', 'ENTERTAINMENT', 'SPORTS',
-                       'SCIENCE', 'HEALTH').
-        num_articles (int): The maximum number of news articles to fetch.
-    """
 
     if category == "Trending News":
         site = "https://news.google.com/news/rss"
