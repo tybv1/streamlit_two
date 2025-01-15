@@ -169,3 +169,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+models/gpt4all-13b-snoozy-q4_0.gguf
