@@ -72,39 +72,9 @@ def main():
 
     # Sidebar for navigation
     st.sidebar.title("Navigation")
-    page = st.sidebar.selectbox("Choose a page", ["Sentiment Analysis", "Chatbot", "COVID-19 Dashboard", "NewsAPI Summariser"])
-
-    if page == "Sentiment Analysis":
-        st.header("News Sentiment Analysis")
-        # Option 1: User enters a URL
-        # url = st.text_input("Enter news article URL:")
-        # if url:
-        #     article_text = get_news_article(url) # You'd implement this in api_utils.py
-        #     sentiment = analyze_news_sentiment(article_text)
-        #     st.write("Sentiment:", sentiment)
-
-        # Option 2: User enters text directly
-        article_text = st.text_area("Enter news article text:")
-        if article_text:
-            sentiment = analyze_news_sentiment(article_text)
-            st.write("Sentiment:", sentiment)
-
-    elif page == "Chatbot":
-        st.header("Chatbot")
-        user_input = st.text_input("You:", key="user_input")  # Use key to manage input state
-        if st.session_state.user_input:
-            response = get_chatbot_response(st.session_state.user_input)
-            st.text_area("Chatbot:", value=response, height=200, key="chatbot_response")
-
-    elif page == "COVID-19 Dashboard":
-        st.header("COVID-19 Data Dashboard")
-        try:
-            covid_data = load_covid_data("data/covid_data.csv")
-            plot_covid_data(covid_data)
-        except FileNotFoundError:
-            st.error("COVID-19 data file not found. Please check the data directory.")
-
-    elif page == "NewsAPI Summariser":
+    page = st.sidebar.selectbox("Choose a page", ["NewsAPI Summariser", "Chatbot", "COVID-19 Dashboard"])
+    
+    if page == "NewsAPI Summariser":
         st.header("News summariser and sentiment analysis")
 
         # Dropdown for topic selection
@@ -119,6 +89,21 @@ def main():
 
         # Fetch and display news for the final topic
         fetch_and_display_news(final_topic)
+
+    elif page == "Chatbot":
+        st.header("Chatbot")
+        user_input = st.text_input("You:", key="user_input")  # Use key to manage input state
+        if st.session_state.user_input:
+            response = get_chatbot_response(st.session_state.user_input)
+            st.text_area("Chatbot:", value=response, height=200, key="chatbot_response")
+
+    elif page == "COVID-19 Dashboard":
+        st.header("COVID-19 Data Dashboard")
+        try:
+            covid_data = load_covid_data("data/covid_data.csv")
+            plot_covid_data(covid_data)
+        except FileNotFoundError:
+            st.error("COVID-19 data file not found. Please check the data directory.")  
 
 
 if __name__ == "__main__":
