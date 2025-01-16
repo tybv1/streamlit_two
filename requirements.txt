@@ -4,3 +4,12 @@ pandas
 plotly
 requests
 gpt4all
+beautifulsoup4
+newspaper3k
+nltk
+lxml_html_clean
+textblob
+setuptools
+wheel
+spacy
+newsapi-python
